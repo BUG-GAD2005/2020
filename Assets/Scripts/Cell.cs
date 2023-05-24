@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cell 
+public class Cell : MonoBehaviour
 {
-    public int x;
-    public int y;
     public bool isFull;
-    Color color;
+    public Color color;
 
-    public Cell(int x, int y, bool isFull=false, Color color= default(Color))
+    public Cell()
     {
-        this.x = x;
-        this.y = y;
-        isFull = false;
-        this.color = color == default(Color) ? new Color32(25, 28, 25, 255) : color;
+        this.isFull = false;
+        this.color = new Color32(25, 28, 25, 255);
 
+    }
+    private void Awake()
+    {
+        //GameObject parentObject = this.transform.parent.gameObject;
+        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = color;
     }
 
 
