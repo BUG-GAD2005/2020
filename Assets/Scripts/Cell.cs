@@ -15,7 +15,7 @@ public class Cell : MonoBehaviour
     }
     private void Awake()
     {
-        //GameObject parentObject = this.transform.parent.gameObject;
+
         SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteRenderer.color = color;
     }

@@ -7,12 +7,12 @@ public class MapGenerator : MonoBehaviour
     GameObject[][] cellMap;
     int numRows= 10;
     int numColumns= 10;
-    float cellSpace = 1.3f;
+    float cellSpace = 1.1f;
     public GameObject cellPrefab;
     Vector3 startingVector;
     void Start()
     {
-        startingVector = new Vector3(-(numRows - 1) / 2 * cellSpace, -(numColumns - 1) / 2 * cellSpace, 0);
+        startingVector = new Vector3(-(numRows - 1) / 2 * cellSpace, -(numColumns - 2) / 2 * cellSpace, 0);
 
         GenerateMap();
     }
