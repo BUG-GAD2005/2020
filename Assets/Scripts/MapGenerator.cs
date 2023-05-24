@@ -33,7 +33,6 @@ public class MapGenerator : MonoBehaviour
                 Vector3 offset = new Vector3(cellSpace * row, cellSpace * column, 0);
                 Vector3 cellVector = startingVector + offset;
                 cellMap[row][column] = Instantiate(cellPrefab,cellVector, Quaternion.identity );
-                Debug.Log(cellMap[row][column]);
             }
         }
         
