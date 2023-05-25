@@ -677,6 +677,7 @@ GameObject:
   - component: {fileID: 1954102819}
   - component: {fileID: 1954102821}
   - component: {fileID: 1954102822}
+  - component: {fileID: 1954102823}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -748,6 +749,19 @@ MonoBehaviour:
   - {fileID: 1794265203}
   - {fileID: 1649085735}
   spawnShape: 0
+--- !u!114 &1954102823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954102818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b4ad0fd19f43849aeb77a6afa3bdf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1547865326}
 --- !u!1 &1957659566
 GameObject:
   m_ObjectHideFlags: 0
