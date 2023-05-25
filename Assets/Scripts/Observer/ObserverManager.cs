@@ -6,31 +6,36 @@ namespace Observer
 {
     public static class ObserverManager
     {
-        private static Dictionary<string, List<Action>> functionListeners = new Dictionary<string, List<Action>>();
+        #region Private Variables
+
+        private static Dictionary<string, List<Action>> _functionListeners = new Dictionary<string, List<Action>>();
+
+        #endregion
+
+        #region Public Methods
 
         public static void Register(string eventName, Action handler)
         {
-            if (!functionListeners.ContainsKey(eventName))
+            if (!_functionListeners.ContainsKey(eventName))
             {
-                functionListeners[eventName] = new List<Action>();
+                _functionListeners[eventName] = new List<Action>();
             }
 
-            functionListeners[eventName].Add(handler);
+            _functionListeners[eventName].Add(handler);
         }
 
         public static void Unregister(string eventName, Action handler)
         {
-            if (functionListeners.ContainsKey(eventName))
+            if (_functionListeners.TryGetValue(eventName, out var listener))
             {
-                functionListeners[eventName].Remove(handler);
+                listener.Remove(handler);
             }
         }
 
         public static void Push(string eventName)
         {
-            if (functionListeners.ContainsKey(eventName))
+            if (_functionListeners.TryGetValue(eventName, out var handlers))
             {
-                var handlers = functionListeners[eventName];
                 foreach (var handler in handlers)
                 {
                     handler?.Invoke();
@@ -41,5 +46,7 @@ namespace Observer
                 Debug.LogWarning($"Event '{eventName}' does not exist. Make sure to register it before notifying.");
             }
         }
+
+        #endregion
     }
 }

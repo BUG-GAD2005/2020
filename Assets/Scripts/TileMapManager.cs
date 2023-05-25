@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Observer;
@@ -5,7 +6,18 @@ using GlobalVariables;
 
 public class TileMapManager : ObserverBase
 {
-    public Tilemap tilemap;
+    #region Private Variables
+
+    private Tilemap _tilemap;
+
+    #endregion
+
+    #region Monobehaviour Methods
+
+    private void Start()
+    {
+        _tilemap = MainLogic.Instance.ActiveTileMap;
+    }
 
     private void OnEnable()
     {
@@ -16,9 +28,14 @@ public class TileMapManager : ObserverBase
     {
         Unregister(CustomEvents.OnShapePlaced, CheckFullLine);
     }
+
+    #endregion
+
+    #region Private Methods
+
     private void CheckFullLine()
     {
-        var bounds = tilemap.cellBounds;
+        var bounds = _tilemap.cellBounds;
 
         for (int row = bounds.yMin; row < bounds.yMax; row++)
         {
@@ -41,12 +58,12 @@ public class TileMapManager : ObserverBase
 
     private bool IsRowFull(int row)
     {
-        var bounds = tilemap.cellBounds;
+        var bounds = _tilemap.cellBounds;
 
         for (int col = bounds.xMin; col < bounds.xMax; col++)
         {
             var cellPos = new Vector3Int(col, row, 0);
-            var tile = tilemap.GetTile(cellPos);
+            var tile = _tilemap.GetTile(cellPos);
             
             if (tile == null)
             {
@@ -59,12 +76,12 @@ public class TileMapManager : ObserverBase
 
     private bool IsColumnFull(int column)
     {
-        var bounds = tilemap.cellBounds;
+        var bounds = _tilemap.cellBounds;
 
         for (int row = bounds.yMin; row < bounds.yMax; row++)
         {
             var cellPos = new Vector3Int(column, row, 0);
-            var tile = tilemap.GetTile(cellPos);
+            var tile = _tilemap.GetTile(cellPos);
 
             if (tile == null)
             {
@@ -77,23 +94,25 @@ public class TileMapManager : ObserverBase
 
     private void EmptyRow(int row)
     {
-        var bounds = tilemap.cellBounds;
+        var bounds = _tilemap.cellBounds;
 
         for (int col = bounds.xMin; col < bounds.xMax; col++)
         {
             var cellPos = new Vector3Int(col, row, 0);
-            tilemap.SetTile(cellPos, null);
+            _tilemap.SetTile(cellPos, null);
         }
     }
 
     private void EmptyColumn(int column)
     {
-        var bounds = tilemap.cellBounds;
+        var bounds = _tilemap.cellBounds;
 
         for (int row = bounds.yMin; row < bounds.yMax; row++)
         {
             var cellPos = new Vector3Int(column, row, 0);
-            tilemap.SetTile(cellPos, null);
+            _tilemap.SetTile(cellPos, null);
         }
     }
+
+    #endregion
 }

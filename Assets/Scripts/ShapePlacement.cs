@@ -4,14 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class ShapePlacement : MonoBehaviour
 {
-    public Tilemap shapeTilemap;
-    
-    private List<Vector2> _shapeTileBaseList;
-
-    private void Start()
-    {
-        _shapeTileBaseList = GetAllTiles(shapeTilemap);
-    }
+    #region Public Methods
 
     public List<Vector2> GetAllTiles(Tilemap tilemap)
     {
@@ -34,6 +27,6 @@ public class ShapePlacement : MonoBehaviour
         }
         return resArray;
     }
-    
 
+    #endregion
 }
