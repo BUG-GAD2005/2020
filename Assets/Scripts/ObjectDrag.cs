@@ -1,7 +1,9 @@
+using GlobalVariables;
+using Observer;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ObjectDrag : MonoBehaviour
+public class ObjectDrag : ObserverBase
 {
     [SerializeField] private Vector3 offset;
     
@@ -27,8 +29,10 @@ public class ObjectDrag : MonoBehaviour
 
     private void OnMouseUp()
     {   
-        if(MainLogic.Instance.CheckValidPlacement(_shapeTilemap, Pos)){
+        if(MainLogic.Instance.CheckValidPlacement(_shapeTilemap, Pos))
+        {
             Debug.Log("Object dropped in valid position");
+            Push(CustomEvents.OnShapePlaced);
             Destroy(gameObject);
         }
         else{
