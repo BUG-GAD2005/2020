@@ -9,26 +9,34 @@ using Random = UnityEngine.Random;
 
 public class ShapeSpawner : ObserverBase
 {
+    #region Public Variables
+
     public List<Transform> shapeSpawnPos;
 
+    #endregion
+
+    #region Serialized Variables
+
     [SerializeField] private bool spawnShape;
-    
+
+    #endregion
+
+    #region Private Variables
+
     private List<GameObject> _deckOfShapes;
     private List<GameObject> _dynamicDeck;
-    private List<GameObject> _handOfShapes;
     private int _shapeCount;
+
+    #endregion
+
+    #region Monobehavious Methods
 
     private void Start()
     {
         _deckOfShapes = new List<GameObject>();
-        _handOfShapes = new List<GameObject>();
         _dynamicDeck = _deckOfShapes;
         _deckOfShapes.AddRange(LoadResources<GameObject>("BlockShapes/"));
         InitializeHand();
-        foreach (var shape in _handOfShapes)
-        {
-            Debug.Log(shape.name);
-        }
     }
 
     private void Update()
@@ -50,14 +58,30 @@ public class ShapeSpawner : ObserverBase
         Unregister(CustomEvents.OnShapePlaced, OnShapePlaced);
     }
 
+    #endregion
+    
+    #region Public Methods
+
+    public static T[] LoadResources<T>(string Path) where T : class {
+        T[] list = Resources.LoadAll(Path, typeof(T)).Cast<T>().ToArray();
+        return list;
+    } 
+
+    public static T LoadResource<T>(string Path) where T : class {
+        T obj = Resources.Load(Path, typeof(T)) as T;
+        return obj;
+    }
+
+    #endregion
+
+    #region Private Methods
+
     private void OnShapePlaced()
     {
         _shapeCount--;
-        Debug.Log(_shapeCount);
         if (_shapeCount == 0)
         {            
             _deckOfShapes = new List<GameObject>();
-            _handOfShapes = new List<GameObject>();
             _dynamicDeck = _deckOfShapes;
             _deckOfShapes.AddRange(LoadResources<GameObject>("BlockShapes/"));
             InitializeHand();
@@ -69,19 +93,11 @@ public class ShapeSpawner : ObserverBase
         {
             var index = Random.Range(0, _deckOfShapes.Count - 1);
             _dynamicDeck.RemoveAt(index);
-            _handOfShapes.Add(Instantiate(_dynamicDeck[index], shapeSpawnPos[i].position, Quaternion.identity));
             _shapeCount++;
         }
         _dynamicDeck = _deckOfShapes;
     }
 
-    public static T[] LoadResources<T>(string Path) where T : class {
-        T[] list = Resources.LoadAll(Path, typeof(T)).Cast<T>().ToArray();
-        return list;
-    } 
-
-    public static T LoadResource<T>(string Path) where T : class {
-        T obj = Resources.Load(Path, typeof(T)) as T;
-        return obj;
-    }
+    #endregion
+    
 }

@@ -5,6 +5,8 @@ namespace Observer
 {
     public class ObserverBase : MonoBehaviour
     {
+        #region Protected Methods
+
         protected void Register(string eventName, Action handler)
         {
             ObserverManager.Register(eventName, handler);
@@ -19,5 +21,7 @@ namespace Observer
         {
             ObserverManager.Push(eventName);
         }
+
+        #endregion
     }
 }
