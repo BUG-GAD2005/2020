@@ -25,10 +25,6 @@ public class ShapeSpawner : ObserverBase
         _dynamicDeck = _deckOfShapes;
         _deckOfShapes.AddRange(LoadResources<GameObject>("BlockShapes/"));
         InitializeHand();
-        foreach (var shape in _handOfShapes)
-        {
-            Debug.Log(shape.name);
-        }
     }
 
     private void Update()
@@ -53,7 +49,6 @@ public class ShapeSpawner : ObserverBase
     private void OnShapePlaced()
     {
         _shapeCount--;
-        Debug.Log(_shapeCount);
         if (_shapeCount == 0)
         {            
             _deckOfShapes = new List<GameObject>();

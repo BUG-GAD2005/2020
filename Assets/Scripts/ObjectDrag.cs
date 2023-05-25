@@ -31,7 +31,6 @@ public class ObjectDrag : ObserverBase
     {   
         if(MainLogic.Instance.CheckValidPlacement(_shapeTilemap, Pos))
         {
-            Debug.Log("Object dropped in valid position");
             Push(CustomEvents.OnShapePlaced);
             Destroy(gameObject);
         }

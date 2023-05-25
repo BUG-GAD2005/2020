@@ -11,11 +11,6 @@ public class ShapePlacement : MonoBehaviour
     private void Start()
     {
         _shapeTileBaseList = GetAllTiles(shapeTilemap);
-
-        foreach (var t in _shapeTileBaseList)
-        {
-            Debug.Log(t);
-        }
     }
 
     public List<Vector2> GetAllTiles(Tilemap tilemap)
