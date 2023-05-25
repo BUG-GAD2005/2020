@@ -3,45 +3,36 @@ using UnityEngine.Tilemaps;
 
 public class ObjectDrag : MonoBehaviour
 {
-    private Vector3 _initialMouseOffset;
-    private Vector3 _initialObjPos;
+    [SerializeField] private Vector3 offset;
+    
+    private Vector3 Pos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    private Vector3 _initialPos;
     private Tilemap _shapeTilemap;
-    private Camera _mainCamera;
 
-    private void Start()
+
+    private void Awake(){
+        _shapeTilemap = GetComponentInChildren<Tilemap>();
+    } 
+
+    private void OnEnable() 
     {
-        _shapeTilemap = GetComponent<Tilemap>();
-        _mainCamera = Camera.main;
+        _initialPos = transform.position;
     }
 
-    private void OnMouseDown()
+    private void OnMouseDrag() 
     {
-        var initialMousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        _initialObjPos = transform.position;
-        _initialMouseOffset = _initialObjPos - initialMousePos;
-    }
-
-    private void OnMouseDrag()
-    {
-        var currentMousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        var targetPos = currentMousePos + _initialMouseOffset;
-
-        transform.position = targetPos;
+        var transferPos = new Vector3(Pos.x, Pos.y, _initialPos.z);
+        transform.position = transferPos + offset;
     }
 
     private void OnMouseUp()
-    {
-        var currentMousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        var targetPos = currentMousePos + _initialMouseOffset;
-
-        if (MainLogic.Instance.CheckValidPlacement(_shapeTilemap, targetPos))
-        {
+    {   
+        if(MainLogic.Instance.CheckValidPlacement(_shapeTilemap, Pos)){
             Debug.Log("Object dropped in valid position");
-            Destroy(gameObject.transform.parent.parent.gameObject);
+            Destroy(gameObject);
         }
-        else
-        {
-            transform.position = _initialObjPos;
+        else{
+            transform.position = _initialPos;
         }
     }
 }
